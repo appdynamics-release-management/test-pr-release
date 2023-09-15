@@ -1,0 +1,17 @@
+{
+  "addonType":"monitoring",
+  "annotations": {
+    "source": "community",
+    "contributor" : "spectrocloud"
+  },  
+  "cloudTypes": [
+    "all"
+  ],
+  "displayName": "KubeWatch",
+  "charts": [
+    "charts/kubewatch.tgz"
+  ],
+  "layer": "addon",
+  "name": "kubewatch",
+  "version": "1.0.7"
+}

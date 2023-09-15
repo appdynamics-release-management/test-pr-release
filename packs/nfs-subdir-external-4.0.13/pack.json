@@ -1,0 +1,20 @@
+{
+  "annotations": {
+    "source": "community",
+    "contributor" : "spectrocloud"
+  },
+  "cloudTypes": [
+    "maas",
+    "edge",
+    "libvirt"
+  ],
+  "displayName": "NFS Subdir External",
+  "kubeManifests": [
+    "manifests/nfs.yaml"
+  ],
+  "eol": "",
+  "group": "",
+  "layer": "csi",
+  "name": "csi-nfs-subdir-external",
+  "version": "4.0.13"
+}

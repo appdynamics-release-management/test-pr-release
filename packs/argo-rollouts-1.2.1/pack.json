@@ -1,0 +1,19 @@
+{
+    "addonType":"system app",
+    "annotations": {
+      "source": "community",
+      "contributor" : "spectrocloud"
+   },
+    "cloudTypes": ["all"],
+    "displayName": "Argo-Rollouts",
+    "kubeManifests": [
+      "manifests/install.yaml"
+    ],
+    "layer": "addon",
+    "name": "argo-rollouts",
+    "version": "1.2.1"
+  }
+
+
+
+

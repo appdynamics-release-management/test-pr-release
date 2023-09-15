@@ -1,0 +1,17 @@
+{
+  "addonType": "authentication",
+  "annotations": {
+    "source": "community",
+    "contributor" : "spectrocloud"
+  },  
+  "cloudTypes": [
+    "all"
+  ],
+  "charts": [
+    "charts/rbac-manager-1.9.0.tgz"
+  ],
+  "displayName": "Fairwinds RBAC Manager",
+  "layer":"addon",
+  "name": "rbac-manager",
+  "version": "1.9.0"
+}

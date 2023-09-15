@@ -1,0 +1,19 @@
+{
+  "addonType":"system app",
+  "annotations": {
+    "source": "community",
+    "contributor" : "spectrocloud"
+  },
+  
+  "cloudTypes": [
+    "all"
+  ],
+  "displayName": "KubeFlow",
+  "kubeManifests": [
+    "manifests/kubeflow-operator.yaml",
+    "manifests/kubeflow-kfdef.yaml"
+  ],
+  "layer": "addon",
+  "name": "kubeflow",
+  "version": "1.2.0"
+}

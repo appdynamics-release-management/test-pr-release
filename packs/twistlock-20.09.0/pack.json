@@ -1,0 +1,18 @@
+{
+  "addonType": "security",
+  "annotations": {
+    "docsURL": "https://docs.spectrocloud.com/integrations/prisma-cloud",
+    "source": "community",
+    "contributor" : "spectrocloud"
+  },
+  "cloudTypes": [
+    "all"
+  ],
+  "displayName": "Prisma Cloud Compute",
+  "kubeManifests": [
+    "manifests/prisma-cloud.yaml"
+  ],
+  "layer":"addon",
+  "name": "prismacloud",
+  "version": "20.09.0"
+}

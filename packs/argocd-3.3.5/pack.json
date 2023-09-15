@@ -1,0 +1,18 @@
+{
+  "addonType":"system app",
+  "annotations": {
+    "ingressSupported": "true",
+    "source": "community",
+    "contributor" : "spectrocloud"
+  },
+  "charts": [
+    "charts/argo-cd.tgz"
+  ],
+  "cloudTypes": [
+    "all"
+  ],
+  "displayName": "Argo CD",
+  "layer":"addon",
+  "name": "argo-cd",
+  "version": "3.3.5"
+}

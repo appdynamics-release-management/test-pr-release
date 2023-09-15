@@ -1,0 +1,19 @@
+{
+  "addonType":"monitoring",
+  "annotations": {
+    "ingressSupported": "true",
+    "docsURL": "https://docs.spectrocloud.com/integrations/kubevious",
+    "source": "community",
+    "contributor" : "spectrocloud"
+  },
+  "cloudTypes": [
+    "all"
+  ],
+  "displayName": "Kubevious",
+  "charts": [
+    "charts/kubevious.tgz"
+  ],
+  "layer": "addon",
+  "name": "kubevious",
+  "version": "0.5.9"
+}
