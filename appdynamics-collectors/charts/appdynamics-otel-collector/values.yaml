@@ -1,0 +1,104 @@
+nameOverride: ""
+fullnameOverride: ""
+
+# data endpoint
+endpoint: ""
+
+#oauth2client required settings
+clientId: ""
+clientSecretEnvVar: {}
+tokenUrl: ""
+
+global:
+  tls:
+    otelReceiver:
+      secret: {}
+      settings: {}
+    otelExporter:
+      secret: {}
+      settings: {}
+
+# spec is the spec section for opentelemetry operator.
+spec:
+  mode: deployment
+  image: otel/opentelemetry-collector-contrib:0.51.0
+
+# config is the Collector configs. Other resources configs are in seperated sections below.
+config:
+  extensions:
+    health_check:
+      endpoint: 0.0.0.0:13133
+
+  receivers:
+    otlp:
+      protocols:
+        grpc:
+          endpoint: 0.0.0.0:4317
+        http:
+          endpoint: 0.0.0.0:4318
+
+  processors:
+    # https://github.com/open-telemetry/opentelemetry-collector/blob/main/processor/batchprocessor/README.md
+    batch:
+      send_batch_size: 1000
+      timeout: 10s
+      send_batch_max_size: 1000
+    # https://github.com/open-telemetry/opentelemetry-collector/blob/main/processor/memorylimiterprocessor/README.md
+    memory_limiter:
+      check_interval: 10s  # the recommended value is 1 second by opentelemetry-collector, but our traffic is every minute
+      limit_mib: 1536
+
+  exporters:
+    otlphttp:
+      headers:
+        appd-otel-collector-version: "{{ .Chart.AppVersion }}"
+      auth:
+        authenticator: oauth2client
+    
+    logging:
+      loglevel: debug
+
+  service:
+    extensions: [health_check, oauth2client]
+    pipelines:
+      metrics:
+        receivers: [otlp]
+        processors: [memory_limiter, batch] # according to doc, "The memory_limiter processor should be the first processor defined in the pipeline (immediately after the receivers)."
+        exporters: [otlphttp]
+      traces:
+        receivers: [otlp]
+        processors: [memory_limiter, batch]
+        exporters: [otlphttp]
+      logs:
+        receivers: [otlp]
+        processors: [memory_limiter, batch]
+        exporters: [otlphttp]
+
+# extra otel collector configuration
+configOverride: {}
+
+# service expose collector for external traffics.
+service:
+  name: "appdynamics-otel-collector-service"
+  ports:
+    - name: http
+      port: 4318
+      protocol: TCP
+      targetPort: 4318
+    - name: grpc
+      port: 4317
+      protocol: TCP
+      targetPort: 4317
+  type: ClusterIP
+
+
+# serviceAccount is the serviceAccount associated with the collector, set serviceAccount.create to false if you don't need it
+serviceAccount:
+  annotations: {}
+  create: true
+  imagePullSecrets: []
+  #name: default to be the full name
+
+rbac:
+  create: true
+  rules: []

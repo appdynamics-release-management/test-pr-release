@@ -1,0 +1,11 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: OpenTelemetryCollector
+metadata:
+  labels:
+{{- include "appdynamics-otel-collector.labels" . | nindent 4 }}
+  name: {{ include "appdynamics-otel-collector.fullname" . }}
+spec:
+{{- include "appdynamics-otel-collector.spec" . | nindent 2 }}
+
+
+

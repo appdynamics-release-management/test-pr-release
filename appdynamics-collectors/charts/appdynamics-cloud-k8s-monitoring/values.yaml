@@ -1,0 +1,143 @@
+global:
+  tls:
+    appdCollectors:
+      enabled: false
+      secret: {}
+
+install:
+  clustermon: true
+  defaultInfraCollectors: true
+  logCollector: false
+
+# RBAC config
+clustermonServiceAccount: appdynamics-clustermon
+inframonServiceAccount: appdynamics-inframon
+logCollectorServiceAccount: appdynamics-log-collector
+
+# Clustermon Configs
+clustermonConfig:
+  clusterName: null
+  logLevel: info
+  logFilesMaxSizeMb: 10
+  logFilesNumBackups: 4
+  printToStdout: "true"
+
+  filters:
+    namespace:
+      includeRegex: ".*"
+      excludeRegex: ""
+    entity:
+      excludeRegex: ""
+      excludeLabels: []
+    label:
+      excludeRegex: ""
+
+  ingressControllers: {}
+
+  events:
+    enabled: true
+    severityToExclude: []
+    reasonToExclude: []
+    severeGroupByReason: []
+
+# Infra Manager Configs
+infraManagerConfig:
+  logLevel: info
+  logFilesMaxSizeMb: 10
+  logFilesNumBackups: 4
+  printToStdout: "true"
+
+# Servermon Configs
+servermonConfig:
+  logLevel: info
+  logFilesMaxSizeMb: 10
+  logFilesNumBackups: 4
+
+# Containermon Configs
+containermonConfig:
+  logLevel: info
+  logFilesMaxSizeMb: 10
+  logFilesNumBackups: 4
+
+# LogCollector Configs
+logCollectorConfig:
+  container:
+    conditions:
+      - condition: {}
+        multiLinePattern:
+        multiLineNegate:
+        multiLineMatch:
+        messageParserLog4JPattern:
+        messageParserLogbackPattern:
+        enableJSONLogs:
+        jsonTimestampField:
+        jsonTimestampPattern:
+        messageParserTimestampFormat:
+        messageParserGrokPatterns:
+        grokTimestampField:
+        grokTimestampPattern:
+        enableInfraLogs:
+    clusterName:
+    batchSize:
+    loggingLevel:
+    loggingSelectors: []
+    monitoringEnabled:
+    monitoringLoggingPeriod:
+  filebeatYaml: ""
+
+# Deployment specific configs
+clustermonPod:
+  image: appdynamics/appdynamics-cloud-k8s-monitoring:22.6.0
+  imagePullPolicy: Always
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1000Mi
+    requests:
+      cpu: 500m
+      memory: 750Mi
+  labels: {}
+  annotations: {}
+  nodeSelector: {}
+  imagePullSecrets: []
+  affinity: {}
+  tolerations: []
+  securityContext: {}
+
+# Daemonset specific configs
+inframonPod:
+  image: appdynamics/appdynamics-cloud-k8s-monitoring:22.6.0
+  imagePullPolicy: Always
+  resources:
+    limits:
+      cpu: 350m
+      memory: 100Mi
+    requests:
+      cpu: 200m
+      memory: 64Mi
+  labels: {}
+  annotations: {}
+  nodeSelector: {}
+  imagePullSecrets: []
+  affinity: {}
+  tolerations: []
+  securityContext: {}
+
+# Daemonset specific configs
+logCollectorPod:
+  image: appdynamics/appdynamics-log-collector-agent:22.6.0
+  imagePullPolicy: Always
+  resources:
+    limits:
+      cpu: 400m
+      memory: 300Mi
+    requests:
+      cpu: 200m
+      memory: 150Mi
+  labels: {}
+  annotations: {}
+  nodeSelector: {}
+  imagePullSecrets: []
+  affinity: {}
+  tolerations: []
+  securityContext: {}

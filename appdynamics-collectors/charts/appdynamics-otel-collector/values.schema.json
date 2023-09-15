@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "title": "Values",
+  "additionalProperties": false,
+  "properties": {
+    "global": {
+      "type": "object"
+    },
+    "nameOverride": {
+      "description": "Override name of the chart used in Kubernetes object names.",
+      "type": "string"
+    },
+    "fullnameOverride": {
+      "description": "Override fully qualified app name.",
+      "type": "string"
+    },
+    "clientId": {
+      "description": "AppDynamics oauth2 client id",
+      "type": "string"
+    }, 
+    "clientSecret": {
+      "description": "AppDynamics oauth2 client secret plain text.",
+      "type": ["string"]
+    },
+    "clientSecretEnvVar": {
+      "description": "AppDynamics oauth2 client secret environment variable.",
+      "type": ["object"]
+    },
+    "tokenUrl": {
+      "description": "AppDynamics oauth2 token refreshurl",
+      "type": "string"
+    },
+    "endpoint": {
+      "description": "AppDynamics otlp endpoint url",
+      "type": "string"
+    },
+    "spec": {
+      "type": "object",
+      "description": "The spec section of OpenTelemetry Operator. Refer to https://github.com/open-telemetry/opentelemetry-operator/blob/main/docs/api.md#opentelemetrycollectorspec for possible properties"
+    },
+    "config": {
+      "description": "OpenTelemetry Collector Configuration. It is the recommended way to set the collector config. If spec.config is set, this property won't take effect. Refer to the OpenTelemetry Collector documentation for details..",
+      "type": "object"
+    },
+    "configOverride": {
+      "description": "Any additional OpenTelemetry Collector Configuration for the enabled configuration. We can also use this field to remove/add new components to the pipelines",
+      "type": "object"
+    },
+    "serviceAccount": {
+      "description": "ServiceAccount applied by this chart, disable it by setting create to false.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "create": {
+          "type": "boolean"
+        },
+        "annotations": {
+          "type": "object"
+        },
+        "name": {
+          "type": "string"
+        },
+        "imagePullSecrets": {
+          "type": "array"
+        }
+      },
+      "required": [
+        "create"
+      ]
+    },
+    "service": {
+      "description": "service expose collector for external traffics.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "ClusterIP",
+            "NodePort",
+            "LoadBalancer",
+            "ExternalName"
+          ]
+        },
+        "ports": {
+          "type": "array"
+        }
+      }
+    },
+    "rbac": {
+      "description": "RBAC rules associated with the service account. If created, a Role will be created and bind with the collector service account",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "rules": {
+          "type": "array"
+        },
+        "create": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "create"
+      ]
+    }
+  },
+  "required": [
+    "clientId",
+    "tokenUrl",
+    "endpoint"
+  ],
+  "anyOf": [
+    {"required" : ["clientSecret"]},
+    {"required" : ["clientSecretEnvVar"]}
+  ]
+}
